@@ -14,6 +14,7 @@ var str = "Hello, playground"
 //
 // Output: 20
 struct Stack<T> {
+    private var arr: [T] = []
     mutating func push(_ newElement: T) {
         arr.append(newElement)
     }
@@ -26,7 +27,6 @@ struct Stack<T> {
     var isEmpty: Bool {
         return arr.isEmpty
     }
-    private var arr: [T] = []
 }
 
 var numStack = Stack<Int>()
@@ -38,19 +38,20 @@ numStack.push(8)
 
 print(numStack)
 
-func findSumOfStack(stack: inout Stack<Int>) -> Int {
+func findSumOfStack(stack: Stack<Int>) -> Int {
+    var stackCopy = stack
     var sum = 0
     
-    guard !stack.isEmpty else {
+    guard !stackCopy.isEmpty else {
         return 0
     }
    
-    while !stack.isEmpty {
-        let value = stack.pop()
+    while !stackCopy.isEmpty {
+        let value = stackCopy.pop()
         sum += value ?? -99
     }
 
 return sum
 }
 
-print(findSumOfStack(stack: &numStack))
+print(findSumOfStack(stack: numStack))
